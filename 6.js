@@ -9,30 +9,32 @@ let players = [
 ];
 
 function getShortestPlayerName() {
-    let shortest = players[0].split("-")[1];
+    let shortestName = "";
 
-    for (let p of players) {
-        let name = p.split("-")[1];
-        if (name.length < shortest.length) {
-            shortest = name;
+    for (let i = 0; i < players.length; i++) {
+        let name = players[i].split("-")[1];
+
+        if (shortestName === "" || name.length < shortestName.length) {
+            shortestName = name;
         }
     }
-
-    return shortest;
+    return shortestName;
 }
 
 function countPlayersWithPositionLengthGreaterThan(length) {
     let count = 0;
 
-    for (let p of players) {
-        let position = p.split("-")[2];
+    for (let i = 0; i < players.length; i++) {
+        let position = players[i].split("-")[2];
         if (position.length > length) {
             count++;
         }
     }
-
     return count;
 }
 
 console.log("Tên ngắn nhất:", getShortestPlayerName());
-console.log("Số cầu thủ có vị trí dài hơn 7 ký tự:", countPlayersWithPositionLengthGreaterThan(7));
+console.log(
+    "Số cầu thủ có vị trí dài hơn 7 ký tự:",
+    countPlayersWithPositionLengthGreaterThan(7)
+);
