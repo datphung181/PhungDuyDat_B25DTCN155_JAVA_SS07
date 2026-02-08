@@ -10,25 +10,29 @@ let players = [
 
 function printTeamRoster() {
     console.log("STT | Mã | Tên | Vị trí");
-    for (let i = 0; i < players.length; i++) {
-        let parts = players[i].split("-");
-        console.log(`${i + 1}. ${parts[0]} | ${parts[1]} | ${parts[2]}`);
-    }
+    players.forEach((player, index) => {
+        let [id, name, position] = player.split("-");
+        console.log(`${index + 1}. ${id} | ${name} | ${position}`);
+    });
 }
 
 function countPlayerByPosition(players) {
     let result = {};
-    for (let p of players) {
-        let parts = p.split("-");
-        let position = parts[2];
-        result[position] = (result[position] || 0) + 1;
+    for (let i = 0; i < players.length; i++) {
+        let position = players[i].split("-")[2];
+        if (result[position] === undefined) {
+            result[position] = 1;
+        } else {
+            result[position]++;
+        }
     }
     return result;
 }
 
-function hasGoalkeeper() {
-    for (let p of players) {
-        if (p.toLowerCase().includes("thủ môn")) {
+function hasGoalkeeper(players) {
+    for (let i = 0; i < players.length; i++) {
+        let position = players[i].split("-")[2];
+        if (position === "Thủ môn") {
             return true;
         }
     }
@@ -37,4 +41,4 @@ function hasGoalkeeper() {
 
 printTeamRoster();
 console.log("Số lượng theo vị trí:", countPlayerByPosition(players));
-console.log("Có thủ môn không:", hasGoalkeeper());
+console.log("Có thủ môn không:", hasGoalkeeper(players));
