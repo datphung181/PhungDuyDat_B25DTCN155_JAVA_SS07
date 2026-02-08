@@ -10,34 +10,33 @@ let players = [
 
 function getAllPositions() {
     let result = [];
-    for (let p of players) {
-        let parts = p.split("-");
-        let pos = parts[2];
-        if (!result.includes(pos)) {
-            result.push(pos);
+    for (let i = 0; i < players.length; i++) {
+        let position = players[i].split("-")[2];
+        if (result.indexOf(position) === -1) {
+            result.push(position);
         }
     }
     return result;
 }
 
 function findPlayersWithLongestName() {
-    let longest = "";
-    for (let p of players) {
-        let name = p.split("-")[1];
-        if (name.length > longest.length) {
-            longest = name;
+    let longestName = "";
+    for (let i = 0; i < players.length; i++) {
+        let name = players[i].split("-")[1];
+        if (name.length > longestName.length) {
+            longestName = name;
         }
     }
-    return longest;
+    return longestName;
 }
 
 function countPlayersStartingWithLetter(letter) {
     let count = 0;
-    letter = letter.toLowerCase();
+    let firstChar = letter.toLowerCase();
 
-    for (let p of players) {
-        let name = p.split("-")[1].toLowerCase();
-        if (name.startsWith(letter)) {
+    for (let i = 0; i < players.length; i++) {
+        let name = players[i].split("-")[1].toLowerCase();
+        if (name.charAt(0) === firstChar) {
             count++;
         }
     }
