@@ -1,69 +1,68 @@
 let playerIds = [];
 let playerPositions = [];
+
 let n;
 do {
-    n = Number(prompt("Co bao nhieu cau thu can nhap vao doi bong?"));
-    if (!Number.isInteger(n) || n < 0) {
-        alert("Phai la so nguyen duong");
+    n = +prompt("Có bao nhiêu cầu thủ cần nhập vào đội bóng?");
+    if (!Number.isInteger(n) || n <= 0) {
+        alert("Phải là số nguyên dương");
     }
-} while (!Number.isInteger(n) || n < 0);
-let id;
-let name;
-for (let i = 0; i < n; i++) {
+} while (!Number.isInteger(n) || n <= 0);
 
+for (let i = 0; i < n; i++) {
+    let id;
     do {
-        id = prompt("Nhap ma cau thu");
+        id = prompt("Nhập mã cầu thủ:");
         if (playerIds.includes(id)) {
-            alert("Khong duoc trung");
+            alert("Mã cầu thủ bị trùng!");
         }
     } while (playerIds.includes(id));
     playerIds.push(id);
+
     let position;
-    do {
-        let menu = "---Nhap vi tri---\n" +
-            "1. Thu mon\n"; +
-            "2. Hau ve\n"; +
-            "3. Tien ve\n" +
-            "4. Tien dao\n"; +
-            "Nhap lua chon";
-        position = Number(prompt(menu));
-        switch (position) {
-            case 1:
-                playerPositions.push("Thu mon");
-                break;
-            case 2:
-                playerPositions.push("Hau ve");
-                break;
-            case 3:
-                playerPositions.push("Tien ve");
-                break;
-            case 4:
-                playerPositions.push("Tien dao");
-                break;
-            default:
-                alert("Vui long chon lai");
+    while (true) {
+        let choice = +prompt(
+`--- Nhập vị trí ---
+1. Thủ môn
+2. Hậu vệ
+3. Tiền vệ
+4. Tiền đạo`);
+        if (choice === 1) {
+            position = "Thủ môn";
+            break;
+        } else if (choice === 2) {
+            position = "Hậu vệ";
+            break;
+        } else if (choice === 3) {
+            position = "Tiền vệ";
+            break;
+        } else if (choice === 4) {
+            position = "Tiền đạo";
+            break;
+        } else {
+            alert("Vui lòng chọn từ 1 đến 4");
         }
-    } while (position < 1 || position > 4);
+    }
+    playerPositions.push(position);
 }
+
 printTeamRoster();
-position = prompt("Nhap vi tri");
-let indexes = findPlayerbyPosition(position);
-console.log(`Chi so cac cau thu o vi tri ${position} la ${indexes}`);
 
-
-
+let searchPosition = prompt("Nhập vị trí cần tìm:");
+let indexes = findPlayerByPosition(searchPosition);
+console.log(`Chỉ số các cầu thủ ở vị trí ${searchPosition}: ${indexes}`);
 
 function printTeamRoster() {
-    for (let index in playerIds) {
-        console.log(`${Number(index) + 1}. ${playerIds[index]} - ${playerPositions[index]}`);
+    for (let i = 0; i < playerIds.length; i++) {
+        console.log(`${i + 1}. ${playerIds[i]} - ${playerPositions[i]}`);
     }
 }
 
-function findPlayerbyPosition(position) {
+function findPlayerByPosition(position) {
     let result = [];
-    for (let index in playerPositions) {
-        if (position == playerPositions[index]) {
-            result.push(index);
+    for (let i = 0; i < playerPositions.length; i++) {
+        if (playerPositions[i] === position) {
+            result.push(i);
         }
     }
     return result;
