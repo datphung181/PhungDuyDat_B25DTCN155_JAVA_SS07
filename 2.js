@@ -16,38 +16,31 @@ function printTeamRoster() {
         );
     }
 }
-function updatePlayerNameAndJersey(playerId, newName, newJerseyNumber) {
-    for (let i = 0; i < playerIds.length; i++) {
-        if (playerIds[i] === playerId) {
-            playerNames[i] = newName;
-            playerJerseyNumbers[i] = newJerseyNumber;
-            return true;
-        }
-    }
-    return false;
+
+function updatePlayer(playerId, newName, newJerseyNumber) {
+    let index = playerIds.indexOf(playerId);
+    if (index === -1) return false;
+
+    playerNames[index] = newName;
+    playerJerseyNumbers[index] = newJerseyNumber;
+    return true;
 }
+
 printTeamRoster();
 
 let updateId = prompt("Nhập mã cầu thủ muốn cập nhật (ví dụ: P001):");
+let newName = prompt("Nhập tên mới cho cầu thủ:");
 
-let index = playerIds.indexOf(updateId);
+let newJerseyNumber;
+do {
+    newJerseyNumber = +prompt("Nhập số áo mới (từ 1 đến 99):");
+} while (!Number.isInteger(newJerseyNumber) || newJerseyNumber < 1 || newJerseyNumber > 99);
 
-if (index !== -1) {
-    let newName = prompt("Nhập tên mới cho cầu thủ:");
+let result = updatePlayer(updateId, newName, newJerseyNumber);
 
-    let newJerseyNumber;
-    do {
-        newJerseyNumber = Number(
-            prompt("Nhập số áo mới (từ 1 đến 99):")
-        );
-    } while (!Number.isInteger(newJerseyNumber) || newJerseyNumber < 1 || newJerseyNumber > 99);
-
-    let result = updatePlayerNameAndJersey(updateId, newName, newJerseyNumber);
-
-    if (result) {
-        alert("Cập nhật thành công!");
-        printTeamRoster();
-    }
+if (result) {
+    alert("Cập nhật thành công!");
+    printTeamRoster();
 } else {
     alert("Không tìm thấy cầu thủ với mã này!");
 }
