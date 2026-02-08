@@ -1,41 +1,30 @@
 let players = [];
+
 function printTeamRoster() {
     console.log("===== DANH SÁCH ĐỘI BÓNG =====");
     for (let i = 0; i < players.length; i++) {
-        let parts = players[i].split("-");
-        let id = parts[0];
-        let name = parts[1];
-        let position = parts[2];
-
-        console.log(
-            `${i + 1}. Mã: ${id} | Tên: ${name} | Vị trí: ${position}`
-        );
+        let [id, name, position] = players[i].split("-");
+        console.log(`${i + 1}. Mã: ${id} | Tên: ${name} | Vị trí: ${position}`);
     }
 }
-function pushPlayer(name, position) {
-    players.push(name + "-" + position);
+
+function pushPlayer(id, name, position) {
+    players.push(id + "-" + name + "-" + position);
 }
+
 let n;
 do {
-    n = Number(prompt("Có bao nhiêu cầu thủ cần nhập vào đội bóng?"));
+    n = +prompt("Có bao nhiêu cầu thủ cần nhập vào đội bóng?");
 } while (!Number.isInteger(n) || n <= 0);
 
 for (let i = 0; i < n; i++) {
     let playerId;
-    let isDuplicate;
-
     do {
-        isDuplicate = false;
         playerId = prompt(`Nhập mã cầu thủ thứ ${i + 1}:`);
-
-        for (let j = 0; j < players.length; j++) {
-            if (players[j].startsWith(playerId + "-")) {
-                isDuplicate = true;
-                alert("Mã cầu thủ đã tồn tại, vui lòng nhập lại!");
-                break;
-            }
-        }
-    } while (isDuplicate || playerId === "");
+    } while (
+        playerId === "" ||
+        players.some(p => p.startsWith(playerId + "-"))
+    );
 
     let playerName;
     do {
@@ -43,32 +32,16 @@ for (let i = 0; i < n; i++) {
     } while (playerName === "");
 
     let positionNumber;
-    let positionText;
-
     do {
-        positionNumber = Number(
-            prompt(
-                "Chọn vị trí:\n1. Thủ môn\n2. Hậu vệ\n3. Tiền vệ\n4. Tiền đạo"
-            )
+        positionNumber = +prompt(
+            "Chọn vị trí:\n1. Thủ môn\n2. Hậu vệ\n3. Tiền vệ\n4. Tiền đạo"
         );
     } while (positionNumber < 1 || positionNumber > 4);
 
-    switch (positionNumber) {
-        case 1:
-            positionText = "Thủ môn";
-            break;
-        case 2:
-            positionText = "Hậu vệ";
-            break;
-        case 3:
-            positionText = "Tiền vệ";
-            break;
-        case 4:
-            positionText = "Tiền đạo";
-            break;
-    }
+    let positions = ["Thủ môn", "Hậu vệ", "Tiền vệ", "Tiền đạo"];
+    let positionText = positions[positionNumber - 1];
 
-    players.push(playerId + "-" + playerName + "-" + positionText);
+    pushPlayer(playerId, playerName, positionText);
 }
 
 printTeamRoster();
